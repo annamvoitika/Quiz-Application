@@ -1,0 +1,29 @@
+extends layout 
+block content
+  nav(aria-label='breadcrumb')
+    ol(class='breadcrumb')
+      li(class='breadcrumb-item')
+        a(href='/quizmanager/') Home 
+      li(class='breadcrumb-item')
+        a(href='/quizmanager/quizzes') All Quizzes
+      li(class='breadcrumb-item active' aria-current='page') Quiz Questions
+
+  h1= quiz.title
+  if permission === 'edit'
+    div(class='quiz_actions')
+      a(href=quiz.url+'/addquestion' class="btn btn-primary quiz" role="button") Add Question
+      a(href=quiz.url+'/deletequiz/' class="btn btn-primary quiz" role="button") Delete Quiz
+  div(class='container')
+    each question, i in quiz.questions 
+      if i < quiz.questions.length 
+        div(class='card text-center' style='width: 18rem')
+          div(class='card-body')
+            p(class='card-title')= quiz.questions[i].question
+            hr(class='question_card')
+            if permission === 'edit'
+              a(href=quiz.url+'/editquestion/'+quiz.questions[i]._id class='card-link') Edit question
+              br
+              a(href=quiz.url+'/deletequestion/'+quiz.questions[i]._id class='card-link') Delete Question
+              br
+            if permission === 'edit' || permission === 'view'
+              a(href=quiz.url+'/answers/'+quiz.questions[i]._id class='card-link answers_link') View Answers

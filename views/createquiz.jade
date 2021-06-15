@@ -1,0 +1,21 @@
+extends layout
+block content 
+  nav(aria-label='breadcrumb')
+    ol(class='breadcrumb')
+      li(class='breadcrumb-item')
+        a(href='/quizmanager/') Home 
+      li(class='breadcrumb-item active' aria-current='page') Add Quiz
+  h1 Add new quiz
+  form(method='POST' action='')
+    div.form-group 
+      label(for='title') Quiz Title
+      input#title.form-control(type='text', placeholder='Please enter quiz title' name='title' required='true')
+    div.form-group 
+      label(for='question') Question
+      input#question.form-control(type='text', placeholder='Please enter question' name="question" required='true')
+    div.form-group 
+      label(for='answer') Answer Option 1
+      input#answer.form-control(type='text', placeholder='Please enter one answer option' name="answer" required='true')
+
+    button.btn.btn-primary(type='submit') Add
+  

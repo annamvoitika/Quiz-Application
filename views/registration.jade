@@ -1,0 +1,18 @@
+extends layout_not_loggedin 
+block content 
+  h1 Sign up
+  form(method='POST' action='')
+    div.form-group 
+      label(for='username') Username:
+      input#username.form-control(type='text', placeholder='Pick a username' name='username' required='true')
+    div.form-group 
+      label(for='password') Password:
+      input#password.form-control(type='password', placeholder='Make a password' name='password' required='true')
+      div.form-group 
+      label(for='permission') Permission:
+      select(class='form-select' name='permission')
+        option(selected) Click to see options
+        option(value='edit' name='permission') Edit Permission
+        option(value='view' name='permission') View Permission
+        option(value='restricted' name='permission') Restricted Permission
+    button.btn.btn-primary(type='submit') Submit

@@ -1,0 +1,9 @@
+extends layout
+block content 
+  h1 Are you sure you want to delete this?
+  span
+    form(method='POST' action='' class="delete_button")
+      button.btn.btn-primary.delete(type='submit') Yes
+    form(method='GET' action='/quizmanager/quizzes/')
+      button.btn.btn-primary.delete(type='submit') No
+  

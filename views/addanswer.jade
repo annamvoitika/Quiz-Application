@@ -1,0 +1,17 @@
+extends layout
+block content
+  nav(aria-label='breadcrumb')
+    ol(class='breadcrumb')
+      li(class='breadcrumb-item')
+        a(href='/quizmanager/') Home 
+      li(class='breadcrumb-item')
+        a(href='/quizmanager/quizzes') All Quizzes
+      li(class='breadcrumb-item')
+        a(href=quiz.url) Quiz Questions
+      li(class='breadcrumb-item active' aria-current='page') Add New Answer
+  h1 Add another answer option for this question 
+  form(method='POST' action='')
+    div.form-group 
+      label(for='answer') Answer option
+      input#answer.form-control(type='text', placeholder='Answer text' name="answer" required='true')
+    button.btn.btn-primary(type='submit') Add

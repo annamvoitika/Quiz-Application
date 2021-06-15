@@ -1,0 +1,29 @@
+extends layout
+block content
+  nav(aria-label='breadcrumb')
+    ol(class='breadcrumb')
+      li(class='breadcrumb-item')
+        a(href='/quizmanager/') Home 
+      li(class='breadcrumb-item')
+        a(href='/quizmanager/quizzes') All Quizzes
+      li(class='breadcrumb-item')
+        a(href=quiz.url) Quiz Questions
+      li(class='breadcrumb-item active' aria-current='page') Question Answers
+  h1 Answers for this question
+  if permission === 'edit'
+    a(href=quiz.url+'/answers/'+question_id+'/addanswer/' class="btn btn-primary quiz" role="button") Add New Answer 
+  div(class='container')
+    each question in quiz.questions 
+      if question._id == question_id
+        each answer, i in question.answers
+          if i < question.answers.length
+            div(class='card text-center' style='width: 18rem')
+              div(class='card-body')
+                p(class='card-title')=letters[i]+' '+answer.answer_option
+                hr(class='question_card')
+
+                if permission === 'edit'
+                  a(href=quiz.url+'/answers/'+question.url+'/deleteanswer/'+question.answers[i]._id) Delete Answer
+                  br
+                  a(href=quiz.url+'/answers/'+question.url+'/editanswer/'+question.answers[i]._id) Edit Answer
+

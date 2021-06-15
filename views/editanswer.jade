@@ -1,0 +1,12 @@
+extends layout 
+block content
+  h1 Edit an existing answer 
+  each question in quiz.questions 
+      if question._id == question_id 
+        each answer in question.answers
+          if answer._id == answer_id
+            form(method='POST' action='')
+              div.form-group 
+                label(for='answer') Answer
+                input#answer.form-control(type='text', value=answer.answer_option name="answer" required='true')
+              button.btn.btn-primary(type='submit') Submit change

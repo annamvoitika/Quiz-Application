@@ -1,0 +1,10 @@
+extends layout 
+block content 
+  h1 Edit question
+  each question in quiz.questions 
+      if question._id == question_id
+        form(method='POST' action='')
+          div.form-group 
+            label(for='question') Question
+            input#question.form-control(type='text', value=question.question name="question" required='true')
+          button.btn.btn-primary(type='submit') Submit change

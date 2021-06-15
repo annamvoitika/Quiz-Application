@@ -1,0 +1,14 @@
+extends layout_not_loggedin
+block content
+  h1 Sign in
+  form(method='POST' action='')
+    div.form-group
+      label(for='username') Username 
+      input#username.form-control(type='text', placeholder='Enter username' name='username' required='true')
+    div.form-group 
+      label(for='password') Password 
+      input#password.form-control(type='password', placeholder='Enter password' name='password' required='true')
+    button.btn.btn-primary(type='submit') Submit
+  
+  p Don't have an account? 
+    a(href='/quizmanager/register') Create a new one

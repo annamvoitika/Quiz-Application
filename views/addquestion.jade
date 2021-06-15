@@ -1,0 +1,17 @@
+extends layout
+block content 
+  nav(aria-label='breadcrumb')
+    ol(class='breadcrumb')
+      li(class='breadcrumb-item')
+        a(href='/quizmanager/') Home 
+      li(class='breadcrumb-item')
+        a(href='/quizmanager/quizzes') All Quizzes
+      li(class='breadcrumb-item')
+        a(href='/quizmanager/quiz/'+ quiz._id) Quiz Questions
+      li(class='breadcrumb-item active' aria-current='page') Add Question
+  h1 Add New Question for this Quiz
+  form(method='POST' action='')
+    div.form-group 
+      label(for='question') Question
+      input#question.form-control(type='text', placeholder='Please enter a question' name="question" required='true')
+    button.btn.btn-primary(type='submit') Add
