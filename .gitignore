@@ -1,2 +1,4 @@
 node_modules
 coverage
+cypress/fixtures/example.json
+cypress/plugins/index.js

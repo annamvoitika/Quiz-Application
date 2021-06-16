@@ -18,6 +18,7 @@ block content
       if i < quiz.questions.length 
         div(class='card text-center' style='width: 18rem')
           div(class='card-body')
+            p(class='card-title')= i+1
             p(class='card-title')= quiz.questions[i].question
             hr(class='question_card')
             if permission === 'edit'

@@ -8,6 +8,7 @@ describe("Answers page", function() {
       })
 
     it('has a clickable link to add new answer', function() {
+        cy.contains('View all quizzes').click();
         cy.contains('Add new quiz').click();
         cy.contains('Add new quiz');
         cy.get('.form-group').find('[name="title"]').type('Test');

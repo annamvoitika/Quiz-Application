@@ -7,6 +7,11 @@ describe("All quizzes page", function() {
         cy.login('student2', '123secure');
       })
 
+    it('has a clickable link to add new quiz', function() {
+        cy.contains('View all quizzes').click();
+        cy.contains('Add new quiz');
+    })
+
     it('has a clickable link to view each quiz', function() {
         cy.contains('View all quizzes').click();
         cy.contains('All Quizzes');

@@ -1,12 +1,9 @@
-const quizzes = require('../public/images/quizzes.png');
 extends layout
 block content
   div(class='home')
     h1 Welcome!
-    div(class='card' style="width: 18rem;")
-      img(src=quizzes class='card-img-top')
-      div(class='card-body')
-        a(href='/quizmanager/quizzes' class='card-title') View all quizzes
-        p(class='card-text') Click here to view all quizzes
-    if permission === 'edit'
-      a(href='/quizmanager/createquiz') Add new quiz
+    div(class='container')
+      div(class='card text-center' style="width: 18rem;")
+        img.card-img-top(src="/images/quiz.png" alt="Question marks that represent quizzes")
+        div(class='card-body')
+          a(href='/quizmanager/quizzes' class='card-title') View all quizzes

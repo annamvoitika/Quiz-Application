@@ -1,15 +1,15 @@
 const Quiz = require("../models/quiz");
 
-const renderHomepage = function (req, res) {
+exports.renderHomepage = function (req, res) {
     const permission_level = req.session.user.permission;
     res.render('home', {permission: permission_level});
 }
 
-const createQuiz_get = function (req, res) {
+exports.createQuiz_get = function (req, res) {
     res.render('createquiz')
 };
 
-const createQuiz_post = async (req, res) => {
+exports.createQuiz_post = async (req, res) => {
     const newQuiz = new Quiz({
         title: req.body.title,
         questions: [{
@@ -24,16 +24,17 @@ const createQuiz_post = async (req, res) => {
         .catch(err => res.status(400).json('error: ' + err))
 };
 
-const viewAllQuizzes = async (req, res, next) => {
+exports.viewAllQuizzes = async (req, res, next) => {
+    const permission_level = req.session.user.permission;
     Quiz.find()
         .populate('questions')
         .exec(function (err, quizzes) {
             if (err) return next(err)
-            res.render('quizzes', { all_quizzes: quizzes })
+            res.render('quizzes', { all_quizzes: quizzes, permission: permission_level })
         });
 }
 
-const viewQuiz = function (req, res, next) {
+exports.viewQuiz = function (req, res, next) {
     const permission_level = req.session.user.permission;
     Quiz.findById(req.params.id)
         .exec(function (err, quiz) {
@@ -42,7 +43,7 @@ const viewQuiz = function (req, res, next) {
         });
 }
 
-const deleteQuiz_get = function (req, res, next) {
+exports.deleteQuiz_get = function (req, res, next) {
     Quiz.findById(req.params.id)
     .exec(function (err, quiz) {
         if (err) return next(err)
@@ -50,7 +51,7 @@ const deleteQuiz_get = function (req, res, next) {
     });
 }
 
-const deleteQuiz_post = function (req, res, next) {
+exports.deleteQuiz_post = function (req, res, next) {
     Quiz.findOneAndRemove({
         '_id' : req.params.id
     },
@@ -61,7 +62,7 @@ const deleteQuiz_post = function (req, res, next) {
     )
 }
 
-const addQuestion_get = function (req, res) {
+exports.addQuestion_get = function (req, res) {
     Quiz.findById(req.params.id)
     .exec(function (err, quiz) {
         if (err) return next(err)
@@ -69,7 +70,7 @@ const addQuestion_get = function (req, res) {
     });
 }
 
-const addQuestion_post = function (req, res, next) {
+exports.addQuestion_post = function (req, res, next) {
     Quiz.findOneAndUpdate({ '_id': req.params.id }, {
         '$push': {
             questions: {
@@ -82,7 +83,7 @@ const addQuestion_post = function (req, res, next) {
         });
 }
 
-const editQuestion_get = function (req, res, next) {
+exports.editQuestion_get = function (req, res, next) {
     Quiz.findOne({'_id': req.params.id})
     .exec(function (err, quiz) {
         if (err) return next(err)
@@ -90,7 +91,7 @@ const editQuestion_get = function (req, res, next) {
     });
 }
 
-const editQuestion_post = function (req, res, next) {
+exports.editQuestion_post = function (req, res, next) {
     Quiz.findOneAndUpdate({
         '_id': req.params.id, 'questions._id': req.params.otherid
     },
@@ -106,7 +107,7 @@ const editQuestion_post = function (req, res, next) {
     )
 }
 
-const deleteQuestion_get = function (req, res, next) {
+exports.deleteQuestion_get = function (req, res, next) {
     Quiz.findById(req.params.id)
     .populate('questions')
     .exec(function (err, quiz) {
@@ -115,7 +116,7 @@ const deleteQuestion_get = function (req, res, next) {
     });
 }
 
-const deleteQuestion_post = function (req, res, next) {
+exports.deleteQuestion_post = function (req, res, next) {
     Quiz.findOneAndUpdate({
         '_id': req.params.id
     },
@@ -131,7 +132,7 @@ const deleteQuestion_post = function (req, res, next) {
     )
 }
 
-const viewAnswers = function (req, res, next) {
+exports.viewAnswers = function (req, res, next) {
     const permission_level = req.session.user.permission;
     Quiz.findOne({
         '_id': req.params.id})
@@ -142,7 +143,7 @@ const viewAnswers = function (req, res, next) {
     });
 }
 
-const addAnswer_post = function (req, res, next) {
+exports.addAnswer_post = function (req, res, next) {
     Quiz.findOneAndUpdate({ '_id': req.params.id, 'questions._id': req.params.otherid}, {
         '$push': {
             'questions.$.answers': {
@@ -156,7 +157,7 @@ const addAnswer_post = function (req, res, next) {
         });
 }
 
-const addAnswer_get = function (req, res) {
+exports.addAnswer_get = function (req, res) {
     Quiz.findById(req.params.id)
     .exec(function (err, quiz) {
         if (err) return next(err)
@@ -164,7 +165,7 @@ const addAnswer_get = function (req, res) {
     });
 }
 
-const deleteAnswer_get = function(req, res, next) {
+exports.deleteAnswer_get = function(req, res, next) {
     Quiz.findById(req.params.id)
     .exec(function (err, quiz) {
         if (err) return next(err)
@@ -172,7 +173,7 @@ const deleteAnswer_get = function(req, res, next) {
     });
 }
 
-const deleteAnswer_post = function(req, res, next) {
+exports.deleteAnswer_post = function(req, res, next) {
     Quiz.findOneAndUpdate({
         '_id': req.params.id, 'questions._id': req.params.otherid
     },
@@ -189,7 +190,7 @@ const deleteAnswer_post = function(req, res, next) {
     });
 }
 
-const editAnswer_get = function(req, res, next) {
+exports.editAnswer_get = function(req, res, next) {
     Quiz.findOne({'_id': req.params.id})
     .exec(function (err, quiz) {
         if (err) return next(err)
@@ -197,7 +198,7 @@ const editAnswer_get = function(req, res, next) {
     });
 }
 
-const editAnswer_post = function(req, res, next) {
+exports.editAnswer_post = function(req, res, next) {
     Quiz.findOneAndUpdate({
         '_id': req.params.id, 'questions._id': req.params.otherid
     },
@@ -215,28 +216,4 @@ const editAnswer_post = function(req, res, next) {
         if (err) return next(err)
         res.redirect('/quizmanager/quiz/'+quiz._id)
     });
-}
-
-
-module.exports = {
-    renderHomepage,
-    createQuiz_post,
-    createQuiz_get,
-    viewQuiz,
-    viewAllQuizzes,
-    addQuestion_post,
-    addQuestion_get,
-    editQuestion_get,
-    editQuestion_post,
-    deleteQuestion_post,
-    deleteQuestion_get,
-    deleteQuiz_post,
-    deleteQuiz_get,
-    viewAnswers,
-    addAnswer_get,
-    addAnswer_post,
-    deleteAnswer_get,
-    deleteAnswer_post,
-    editAnswer_get,
-    editAnswer_post
 }

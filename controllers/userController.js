@@ -1,10 +1,10 @@
 const User = require('../models/user');
 
-exports.register_get = function (req, res) {
+exports.register_get = function(req, res) {
     res.render('registration');
 }
 
-exports.register_post = function (req, res, next) {
+exports.register_post = function(req, res) {
     const user = new User({
         username: req.body.username,
         password: req.body.password,

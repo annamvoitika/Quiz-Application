@@ -6,6 +6,8 @@ block content
         a(href='/quizmanager/') Home 
       li(class='breadcrumb-item active' aria-current='page') All Quizzes
   h1 All Quizzes
+  if permission === 'edit'
+    a(href='/quizmanager/createquiz' class="btn btn-primary quiz" role="button") Add new quiz
   div(class='container')
     - all_quizzes.sort(function(a, b) {let textA = a.title.toUpperCase(); let textB = b.title.toUpperCase(); return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;});
     each quiz in all_quizzes

@@ -12,11 +12,6 @@ describe("Home page", function() {
         cy.contains('All Quizzes');
     })
 
-    it('has a clickable link to add new quiz', function() {
-        cy.contains('Add new quiz').click();
-        cy.contains('Add new quiz');
-    })
-
     it('has a clickable link to log out', function() {
         cy.contains('Log Out').click();
         cy.contains('Sign in');

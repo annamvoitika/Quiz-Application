@@ -1,5 +1,16 @@
 extends layout 
 block content
+  nav(aria-label='breadcrumb')
+    ol(class='breadcrumb')
+      li(class='breadcrumb-item')
+        a(href='/quizmanager/') Home 
+      li(class='breadcrumb-item')
+        a(href='/quizmanager/quizzes') All Quizzes
+      li(class='breadcrumb-item')
+        a(href=quiz.url) Quiz Questions
+      li(class='breadcrumb-item')
+        a(href=quiz.url+'/answers/'+question_id) Quiz Answers
+      li(class='breadcrumb-item active' aria-current='page') Edit Answer
   h1 Edit an existing answer 
   each question in quiz.questions 
       if question._id == question_id 
