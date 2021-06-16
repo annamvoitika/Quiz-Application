@@ -1,6 +1,6 @@
 extends layout 
 block content 
-  h1 Edit question
+  h1 Edit Question
   each question in quiz.questions 
       if question._id == question_id
         form(method='POST' action='')

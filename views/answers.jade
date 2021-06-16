@@ -23,7 +23,7 @@ block content
                 hr(class='question_card')
 
                 if permission === 'edit'
-                  a(href=quiz.url+'/answers/'+question.url+'/deleteanswer/'+question.answers[i]._id) Delete Answer
+                  a(href=quiz.url+'/answers/'+question.url+'/deleteanswer/'+question.answers[i]._id id=i+'delete') Delete Answer
                   br
-                  a(href=quiz.url+'/answers/'+question.url+'/editanswer/'+question.answers[i]._id) Edit Answer
+                  a(href=quiz.url+'/answers/'+question.url+'/editanswer/'+question.answers[i]._id id=i+'edit') Edit Answer
 

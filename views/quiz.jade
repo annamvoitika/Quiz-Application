@@ -21,9 +21,9 @@ block content
             p(class='card-title')= quiz.questions[i].question
             hr(class='question_card')
             if permission === 'edit'
-              a(href=quiz.url+'/editquestion/'+quiz.questions[i]._id class='card-link') Edit question
+              a(href=quiz.url+'/editquestion/'+quiz.questions[i]._id class='card-link' id=i+'edit') Edit Question
               br
-              a(href=quiz.url+'/deletequestion/'+quiz.questions[i]._id class='card-link') Delete Question
+              a(href=quiz.url+'/deletequestion/'+quiz.questions[i]._id class='card-link' id=i+'delete') Delete Question
               br
             if permission === 'edit' || permission === 'view'
               a(href=quiz.url+'/answers/'+quiz.questions[i]._id class='card-link answers_link') View Answers

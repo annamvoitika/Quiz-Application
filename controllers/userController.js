@@ -34,7 +34,7 @@ exports.user_signin_post = function (req, res, next) {
                 req.session.user = user;
                 res.redirect('/quizmanager');
             }
-            else { res.render('/quizmanager/signin') }
+            else { res.render('signin') }
         })
     })
 }

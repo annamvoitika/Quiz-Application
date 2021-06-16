@@ -1,7 +1,7 @@
 extends layout_not_loggedin
 block content
   h1 Sign in
-  form(method='POST' action='')
+  form.signin_form(method='POST' action='')
     div.form-group
       label(for='username') Username 
       input#username.form-control(type='text', placeholder='Enter username' name='username' required='true')

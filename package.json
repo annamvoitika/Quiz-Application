@@ -1,20 +1,29 @@
 {
-  "name": "mymy",
+  "name": "quiz_manager",
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "node ./bin/www"
+    "start": "node ./bin/www",
+    "test": "jest --coverage",
+    "cypress": "cypress open"
   },
   "dependencies": {
     "bcrypt": "^5.0.1",
+    "bootstrap": "^5.0.1",
     "cookie-parser": "~1.4.4",
+    "cypress": "^7.5.0",
     "debug": "~2.6.9",
     "dotenv": "^10.0.0",
     "express": "~4.16.1",
     "express-session": "^1.17.2",
     "http-errors": "~1.6.3",
+    "install": "^0.13.0",
     "jade": "~1.11.0",
+    "jest": "^27.0.4",
+    "jquery": "^3.6.0",
     "mongoose": "^5.12.11",
-    "morgan": "~1.9.1"
+    "morgan": "~1.9.1",
+    "npm": "^7.17.0",
+    "popper.js": "^1.16.1"
   }
 }
