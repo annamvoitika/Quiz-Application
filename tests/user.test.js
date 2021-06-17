@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const UserModel = require('../models/user');
 const userData = { username: 'testuser', password: '123secure', permission: 'Edit Permission' };
+require("dotenv").config();
 
 describe('User Model Test', () => {
       afterAll(done => {
@@ -9,7 +10,7 @@ describe('User Model Test', () => {
       })
 
     beforeAll(async () => {
-        await mongoose.connect('mongodb+srv://shoppingninja:iVPbr1fwztFbwCFC@cluster0.vsc25.mongodb.net/shopping?retryWrites=true&w=majority', { useNewUrlParser: true, useCreateIndex: true }, (err) => {
+        await mongoose.connect(process.env.DB, { useNewUrlParser: true, useCreateIndex: true }, (err) => {
             if (err) {
                 console.error(err);
                 process.exit(1);

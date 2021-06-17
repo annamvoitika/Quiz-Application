@@ -2,7 +2,7 @@ const Quiz = require("../models/quiz");
 
 exports.renderHomepage = function (req, res) {
     const permission_level = req.session.user.permission;
-    res.render('home', {permission: permission_level});
+    res.render('home', { permission: permission_level });
 }
 
 exports.createQuiz_get = function (req, res) {
@@ -45,15 +45,15 @@ exports.viewQuiz = function (req, res, next) {
 
 exports.deleteQuiz_get = function (req, res, next) {
     Quiz.findById(req.params.id)
-    .exec(function (err, quiz) {
-        if (err) return next(err)
-        res.render('delete', { quiz: quiz });
-    });
+        .exec(function (err, quiz) {
+            if (err) return next(err)
+            res.render('delete', { quiz: quiz });
+        });
 }
 
 exports.deleteQuiz_post = function (req, res, next) {
     Quiz.findOneAndRemove({
-        '_id' : req.params.id
+        '_id': req.params.id
     },
         function (err, quiz) {
             if (err) return next(err)
@@ -64,10 +64,10 @@ exports.deleteQuiz_post = function (req, res, next) {
 
 exports.addQuestion_get = function (req, res) {
     Quiz.findById(req.params.id)
-    .exec(function (err, quiz) {
-        if (err) return next(err)
-        res.render('addquestion', { quiz: quiz });
-    });
+        .exec(function (err, quiz) {
+            if (err) return next(err)
+            res.render('addquestion', { quiz: quiz });
+        });
 }
 
 exports.addQuestion_post = function (req, res, next) {
@@ -84,11 +84,11 @@ exports.addQuestion_post = function (req, res, next) {
 }
 
 exports.editQuestion_get = function (req, res, next) {
-    Quiz.findOne({'_id': req.params.id})
-    .exec(function (err, quiz) {
-        if (err) return next(err)
-        res.render('editquestion', { quiz: quiz, question_id: req.params.otherid });
-    });
+    Quiz.findOne({ '_id': req.params.id })
+        .exec(function (err, quiz) {
+            if (err) return next(err)
+            res.render('editquestion', { quiz: quiz, question_id: req.params.otherid });
+        });
 }
 
 exports.editQuestion_post = function (req, res, next) {
@@ -109,11 +109,11 @@ exports.editQuestion_post = function (req, res, next) {
 
 exports.deleteQuestion_get = function (req, res, next) {
     Quiz.findById(req.params.id)
-    .populate('questions')
-    .exec(function (err, quiz) {
-        if (err) return next(err)
-        res.render('delete', { quiz: quiz });
-    });
+        .populate('questions')
+        .exec(function (err, quiz) {
+            if (err) return next(err)
+            res.render('delete', { quiz: quiz });
+        });
 }
 
 exports.deleteQuestion_post = function (req, res, next) {
@@ -122,7 +122,7 @@ exports.deleteQuestion_post = function (req, res, next) {
     },
         {
             '$pull': {
-                'questions': {'_id': req.params.otherid}
+                'questions': { '_id': req.params.otherid }
             }
         },
         function (err, quiz) {
@@ -135,85 +135,86 @@ exports.deleteQuestion_post = function (req, res, next) {
 exports.viewAnswers = function (req, res, next) {
     const permission_level = req.session.user.permission;
     Quiz.findOne({
-        '_id': req.params.id})
-    .exec(function (err, quiz) {
-        if (err) return next(err)
-        const letters = ['A.', 'B.', 'C.', 'D.', 'E.'];
-        res.render('answers', { quiz: quiz, question_id: req.params.otherid, letters: letters, permission: permission_level });
-    });
+        '_id': req.params.id
+    })
+        .exec(function (err, quiz) {
+            if (err) return next(err)
+            const letters = ['A.', 'B.', 'C.', 'D.', 'E.'];
+            res.render('answers', { quiz: quiz, question_id: req.params.otherid, letters: letters, permission: permission_level });
+        });
 }
 
 exports.addAnswer_post = function (req, res, next) {
-    Quiz.findOneAndUpdate({ '_id': req.params.id, 'questions._id': req.params.otherid}, {
+    Quiz.findOneAndUpdate({ '_id': req.params.id, 'questions._id': req.params.otherid }, {
         '$push': {
             'questions.$.answers': {
                 'answer_option': req.body.answer
             }
-    }
-},
+        }
+    },
         function (err, quiz) {
             console.log(quiz)
-            res.redirect('/quizmanager/quiz/'+quiz._id)
+            res.redirect('/quizmanager/quiz/' + quiz._id)
         });
 }
 
 exports.addAnswer_get = function (req, res) {
     Quiz.findById(req.params.id)
-    .exec(function (err, quiz) {
-        if (err) return next(err)
-        res.render('addanswer', {quiz: quiz});
-    });
+        .exec(function (err, quiz) {
+            if (err) return next(err)
+            res.render('addanswer', { quiz: quiz });
+        });
 }
 
-exports.deleteAnswer_get = function(req, res, next) {
+exports.deleteAnswer_get = function (req, res, next) {
     Quiz.findById(req.params.id)
-    .exec(function (err, quiz) {
-        if (err) return next(err)
-        res.render('delete', {quiz: quiz, question_id: req.params.otherid});
-    });
+        .exec(function (err, quiz) {
+            if (err) return next(err)
+            res.render('delete', { quiz: quiz, question_id: req.params.otherid });
+        });
 }
 
-exports.deleteAnswer_post = function(req, res, next) {
+exports.deleteAnswer_post = function (req, res, next) {
     Quiz.findOneAndUpdate({
         '_id': req.params.id, 'questions._id': req.params.otherid
     },
-    {
-        '$pull': {
-            'questions.$.answers': {
+        {
+            '$pull': {
+                'questions.$.answers': {
                     '_id': req.params.answerid
                 }
-        }
-    },
-    function (err, quiz) {
-        if (err) return next(err)
-        res.redirect('/quizmanager/quizzes')
-    });
+            }
+        },
+        function (err, quiz) {
+            if (err) return next(err)
+            res.redirect('/quizmanager/quizzes')
+        });
 }
 
-exports.editAnswer_get = function(req, res, next) {
-    Quiz.findOne({'_id': req.params.id})
-    .exec(function (err, quiz) {
-        if (err) return next(err)
-        res.render('editanswer', { quiz: quiz, question_id: req.params.otherid, answer_id: req.params.answerid });
-    });
+exports.editAnswer_get = function (req, res, next) {
+    Quiz.findOne({ '_id': req.params.id })
+        .exec(function (err, quiz) {
+            if (err) return next(err)
+            res.render('editanswer', { quiz: quiz, question_id: req.params.otherid, answer_id: req.params.answerid });
+        });
 }
 
-exports.editAnswer_post = function(req, res, next) {
+exports.editAnswer_post = function (req, res, next) {
     Quiz.findOneAndUpdate({
         '_id': req.params.id, 'questions._id': req.params.otherid
     },
-    {
-        '$set': {
-            'questions.$.answers.$[i].answer_option': req.body.answer
-                
-        }
-    }, {
+        {
+            '$set': {
+                'questions.$.answers.$[i].answer_option': req.body.answer
+
+            }
+        }, {
         arrayFilters: [{
             'i._id': req.params.answerid
         }]
     },
-    function (err, quiz) {
-        if (err) return next(err)
-        res.redirect('/quizmanager/quiz/'+quiz._id)
-    });
+        function (err, quiz) {
+            if (err) return next(err)
+            res.redirect('/quizmanager/quiz/' + quiz._id)
+        });
 }

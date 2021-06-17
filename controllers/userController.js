@@ -1,16 +1,16 @@
 const User = require('../models/user');
 
-exports.register_get = function(req, res) {
+exports.register_get = function (req, res) {
     res.render('registration');
 }
 
-exports.register_post = function(req, res) {
+exports.register_post = function (req, res) {
     const user = new User({
         username: req.body.username,
         password: req.body.password,
         permission: req.body.permission
-        });
-        user.save()
+    });
+    user.save()
         .then(() => res.redirect('/quizmanager/signin'))
         .catch(err => res.status(400).json('error: ' + err))
 }
