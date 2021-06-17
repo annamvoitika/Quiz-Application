@@ -11,7 +11,15 @@ block content
       li(class='breadcrumb-item active' aria-current='page') Question Answers
   h1 Answers for this question
   if permission === 'edit'
-    a(href=quiz.url+'/answers/'+question_id+'/addanswer/' class="btn btn-primary quiz" role="button") Add New Answer 
+    each question in quiz.questions 
+      if question._id == question_id
+        if question.answers.length === 5
+          p(class='warning') You reached a maximum of five answer options. Please delete one answer before adding a new one
+        else if question.answers.length < 3
+          p(class='warning') Minimum 3 answers are required per question. Please add more answer options
+          a(href=quiz.url+'/answers/'+question_id+'/addanswer/' class="btn btn-primary quiz" role="button") Add New Answer 
+        else 
+          a(href=quiz.url+'/answers/'+question_id+'/addanswer/' class="btn btn-primary quiz" role="button") Add New Answer 
   div(class='container')
     each question in quiz.questions 
       if question._id == question_id

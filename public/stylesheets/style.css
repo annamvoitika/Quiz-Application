@@ -6,6 +6,7 @@
   --secondary-color: #2b7200;
   --main-text-font: 'Lato', sans-serif;
   --heading-text-font: 'Raleway', sans-serif;
+  --warning-color: #870000;
 }
 
 body {
@@ -123,4 +124,9 @@ span {
   border-color: transparent;
   border-radius: 0.25rem;
   box-shadow: 0 2px 2px rgba(0, 0, 0, 0.09) !important;
+}
+
+p.warning {
+  color: var(--warning-color);
+  text-decoration: underline;
 }

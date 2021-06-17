@@ -1,47 +1,34 @@
-const register_post = require('../controllers/userController');
-const User = require('../models/user');
-const db = require('./db')
-beforeAll(async () => await db.connect())
-afterEach(async () => await db.clearDatabase())
-afterAll(async () => await db.closeDatabase())
+const mongoose = require('mongoose');
+const UserModel = require('../models/user');
+const userData = { username: 'testuser', password: '123secure', permission: 'Edit Permission' };
 
-describe('User model', () => {
-    it('has username, password and permissions level', function () {
-        const newUser = new User({ username: 'test', password: '123', permission: 'Edit Permission' });
-        expect(newUser.username).toEqual('test');
-        expect(newUser.permission).toEqual('Edit Permission');
-        expect(newUser.password).toEqual('123');
+describe('User Model Test', () => {
+      afterAll(done => {
+        mongoose.connection.close()
+        done()
+      })
+
+    beforeAll(async () => {
+        await mongoose.connect('mongodb+srv://shoppingninja:iVPbr1fwztFbwCFC@cluster0.vsc25.mongodb.net/shopping?retryWrites=true&w=majority', { useNewUrlParser: true, useCreateIndex: true }, (err) => {
+            if (err) {
+                console.error(err);
+                process.exit(1);
+            }
+        });
     });
 
-    it('can save user', function (done) {
-        const newUser = new User({ username: 'test', password: '123', permission: 'Edit Permission' });
+    it('create & save user successfully', async () => {
+        const validUser = new UserModel(userData);
+        const savedUser = await validUser.save();
+        expect(savedUser._id).toBeDefined();
+        expect(savedUser.username).toBe(userData.username);
+        expect(savedUser.permission).toBe(userData.permission);
+    });
 
-        newUser.save(function (err) {
-            expect(err).toBeNull();
-
-            User.find(function (err, username) {
-                expect(err).toBeNull();
-                done();
-            });
-        })
-    })
-
-    it('can register user', async function () {
-        const mockRequest = {
-            body: {
-                username: 'test',
-                password: '123',
-                permission: 'Edit Permission'
-            }
-        };
-        const mockResponse = {
-            json: jest.fn(),
-            status: jest.fn(),
-        };
-        const req = mockRequest;
-        const res = mockResponse;
-
-        register_post(req, res);
-        User.findOne({ username: 'test' });
-    })
+    it('hashes password in the database, thus passwords when compared what user entered and what is stored in db should be different', async () => {
+        const validUser = new UserModel(userData);
+        const savedUser = await validUser.save();
+        expect(savedUser._id).toBeDefined();
+        expect(savedUser.password).not.toEqual(userData.password);
+    })    
 })
