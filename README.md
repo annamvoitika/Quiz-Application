@@ -48,3 +48,19 @@ If you have something else running on port 3000, please stop that process by run
 
 To run end-to-end Cypress tests, use the following command in the terminal:  
 ```npm run cypress```
+
+# User credentials  
+
+Please use usernames and passwords below to log in after you start Quiz Manager application.  
+
+- For edit permission user:  
+username: editaccess  
+password: 123  
+
+- For view permission user:  
+username: viewaccess  
+password: 123  
+
+- For restricted permission user:  
+username: restricted  
+password: 123  
