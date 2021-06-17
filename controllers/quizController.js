@@ -27,7 +27,6 @@ exports.createQuiz_post = async (req, res) => {
 exports.viewAllQuizzes = async (req, res, next) => {
     const permission_level = req.session.user.permission;
     Quiz.find()
-        .populate('questions')
         .exec(function (err, quizzes) {
             if (err) return next(err)
             res.render('quizzes', { all_quizzes: quizzes, permission: permission_level })
@@ -109,7 +108,6 @@ exports.editQuestion_post = function (req, res, next) {
 
 exports.deleteQuestion_get = function (req, res, next) {
     Quiz.findById(req.params.id)
-        .populate('questions')
         .exec(function (err, quiz) {
             if (err) return next(err)
             res.render('delete', { quiz: quiz });
